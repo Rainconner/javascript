@@ -1,15 +1,24 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <h1>Dynamic Text Display</h1>
 </head>
 
 <body>
-    <input type="text">
+
+    <input type="text" id="text" oninput="setText(this.value)" />
+    <input type="text" id="fontSize" oninput="setSize(this.value)" />
+    <p id="printText"></p>
+
+    <script>
+        function setText(text) {
+            document.getElementById("printText").innerHTML = text;
+        }
+
+        function setSize(size) {
+            document.getElementById("printText").style.fontSize = size;
+        }
+    </script>
 </body>
 
 </html>
