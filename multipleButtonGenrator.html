@@ -8,22 +8,23 @@
 </head>
 
 <body>
-    <input type="text" id="textField">
+    <input type="range" min="1" max="100" id="rangeField" oninput="displayValue()">
     <button id="button" onclick="elementCreator()">Click</button>
-    <div id="buttonContainer" style="align-self: auto">
+    <p id="displaySliderValue"> </p>
+    <div id="buttonContainer">
 
     </div>
 
+
     <script>
-        var textField = document.getElementById("textField");
+        var rangeField = document.getElementById("rangeField");
         var buttonContainer = document.getElementById("buttonContainer");
+        var displaySliderValue = document.getElementById("displaySliderValue");
 
-        function getText() {
-            var number = textField.value;
-            for (let index = 0; index < array.length; index++) {
-                const element = array[index];
+        function displayValue() {
 
-            }
+            var number = rangeField.value;
+            displaySliderValue.innerHTML = rangeField.value;
         }
 
         function elementCreator() {
@@ -31,9 +32,7 @@
             while (buttonContainer.hasChildNodes()) {
                 buttonContainer.removeChild(buttonContainer.lastChild);
             }
-
-
-            var number = textField.value;
+            var number = rangeField.value;
             number = parseInt(number) + 1;
             for (let index = 1; index < number; index++) {
                 var button = document.createElement("button");
