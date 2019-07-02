@@ -1,15 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 
+
 <head>
+    <style>
+        .ballStyle {
+            background-color: #91684633;
+            border: none;
+            color: white;
+            padding: 50px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 5px;
+            border-radius: 50%;
+        }
+    </style>
     <title></title>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="css/style.css" rel="stylesheet">
+
 </head>
 
 <body>
+    <div id="rulesMenu">
+        rules
+        <button id="startGame" onclick="startGame()"> click to start game</button>
+    </div>
+    <div id="gameFrameDiv">
 
+    </div>
+    <script>
+        var NUMBER_OF_BALLS = 25;
+        var INITIAL_NUMBER_OF_BAL = 1;
+        var green = "green";
+        var red = "red";
+        var blue = "blue";
+        var gameStatus = "IN_PROGRESS";
+        var rulesMenu = document.getElementById("rulesMenu");
+        var gameFrameDiv = document.getElementById("gameFrameDiv");
+        var randomBallNumber = Math.floor(Math.random() * 25) + 1;
+        var playerChances = 3;
+        gameFrameDiv.style.visibility = 'hidden';
+        alert(randomBallNumber);
+
+        function startGame() {
+            rulesMenu.style.visibility = 'hidden';
+            gameFrameDiv.style.visibility = 'visible';
+            loadBalls()
+        }
+
+        function loadBalls() {
+
+            for (let index = 1; index <= NUMBER_OF_BALLS; index++) {
+                var button = document.createElement("button");
+                button.innerHTML = index;
+                button.id = index;
+                button.className = "ballStyle";
+                gameFrameDiv.appendChild(button);
+            }
+        }
+
+        document.addEventListener('click', ballsColorChanger);
+
+        function ballsColorChanger(event) {
+            playerSelectedNumber = event.target.id;
+            if (playerSelectedNumber >= 1 && playerSelectedNumber <= 25) {
+                checkValue(playerSelectedNumber);
+
+                playerChances--;
+
+            }
+        }
+
+        function checkValue(playerSelectedNumber) {
+            if (playerSelectedNumber == randomBallNumber) {
+                gameStatus = "WIN";
+                changeColorOfBalls(playerSelectedNumber, playerSelectedNumber, blue);
+                displayResult();
+            }
+            if (playerChances == 1 && gameStatus == "IN_PROGRESS") {
+                displayGameOver();
+            }
+            if (playerSelectedNumber < randomBallNumber) {
+                changeColorOfBalls(INITIAL_NUMBER_OF_BAL, playerSelectedNumber, green);
+            }
+            if (playerSelectedNumber > randomBallNumber) {
+                changeColorOfBalls(playerSelectedNumber, NUMBER_OF_BALLS, red);
+            }
+        }
+
+        function displayGameOver() {
+            alert("game over");
+        }
+
+        function displayResult() {
+            alert("you won game ");
+        }
+
+        function changeColorOfBalls(initial, end, color) {
+            for (let index = initial; index <= end; index++) {
+                var button = document.createElement("button");
+                document.getElementById(index).style.background = color;
+            }
+        }
+    </script>
 </body>
 
 </html>
