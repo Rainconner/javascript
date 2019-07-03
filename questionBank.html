@@ -30,7 +30,7 @@
         <div id="startButtonDiv">
 
         </div>
-        <div id="questionFrame">
+        <div id="questionFrame" style="align-content: center">
 
         </div>
         <div id="nextButtonDiv">
@@ -43,7 +43,9 @@
         var nextButtonDiv = document.getElementById("nextButtonDiv");
         var startButton;
         var nextButton;
-
+        var currentQuestion = 0;
+        var answerList = [];
+        var userSelectedOption;
 
         var questionOne = {
             id: 1,
@@ -76,7 +78,14 @@
             answer: 0
         }
 
-        var questionList = [questionOne, questionTwo, questionThree, questionFour, questionFive];
+        var questionList = [
+            questionOne,
+            questionTwo,
+            questionThree,
+            questionFour,
+            questionFive
+        ];
+
 
         function createElement(tag, id, text, parent) {
             var child = document.createElement(tag);
@@ -86,15 +95,82 @@
         }
 
         function showInstruction() {
-            createElement("button", 'startButton', "Start", startButtonDiv);
+            createElement("button", 'startButton', "Start Test", startButtonDiv);
             startButton = document.getElementById("startButton");
             startButton.onclick = startTest;
         }
 
-
         function startTest() {
+            createElement("button", 'nextButton', "Next", nextButtonDiv);
+            nextButton = document.getElementById("nextButtonDiv");
+            nextButton.onclick = nextQestion;
+            loadFirstQuestion();
+            currentQuestion++;
+        }
+
+        function loadFirstQuestion() {
+            var question = questionList[currentQuestion];
+            createElement("p", currentQuestion, question.text, questionFrame);
+            createRadioButtons(question.options);
+        }
+
+        function isUserhaveSelectedOption(event) {
+            if (event.target.id >= 0)
+                userSelectedOption = event.target.id;
+        }
+
+        function nextQestion() {
+            if (userSelectedOption >= 0) {
+                var result = {
+                    option: userSelectedOption,
+                    answer: isUserAnswerRight()
+                }
+                alert(answerList);
+                answerList.push(result);
+                removeAllElementsOfId(questionFrame);
+                var question = questionList[currentQuestion];
+                createElement("p", currentQuestion, question.text, questionFrame);
+                createRadioButtons(question.options);
+                userSelectedOption = undefined;
+                currentQuestion++;
+            }
+        }
+
+        function isUserAnswerRight() {
+            if (userSelectedOption == currentQuestion.answer)
+                return true;
+
+            return false;
+        }
 
 
+        function createRadioButtons(options) {
+            var optionNumber = 0;
+            options.forEach(element => {
+
+                var radio = document.createElement("input");
+                var label = document.createElement("label");
+
+                radio.id = optionNumber;
+                radio.type = "radio";
+                radio.name = "answer";
+                radio.value = element;
+
+                radio.onclick = isUserhaveSelectedOption
+                label.appendChild(radio);
+                label.appendChild(document.createTextNode(element));
+
+                questionFrame.appendChild(label);
+                var br = document.createElement("br");
+                questionFrame.appendChild(br);
+                optionNumber++;
+            });
+        }
+
+        function removeAllElementsOfId(id) {
+            while (id.hasChildNodes()) {
+                id.removeChild(id.lastChild);
+            }
         }
     </script>
 </body>
