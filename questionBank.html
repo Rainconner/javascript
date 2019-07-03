@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Question bank</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        button {
+            background-color: #4CAF50;
+            /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            background-color: white;
+            color: black;
+            border: 2px solid #4CAF50;
+        }
+    </style>
+</head>
+
+<body onload="showInstruction()">
+    <center>
+        <div id="startButtonDiv">
+
+        </div>
+        <div id="questionFrame">
+
+        </div>
+        <div id="nextButtonDiv">
+
+        </div>
+    </center>
+    <script>
+        var startButtonDiv = document.getElementById("startButtonDiv");
+        var questionFrame = document.getElementById("questionFrame");
+        var nextButtonDiv = document.getElementById("nextButtonDiv");
+        var startButton;
+        var nextButton;
+
+
+        var questionOne = {
+            id: 1,
+            text: "When super Mario Bros was realesd?",
+            options: ['1988', '1999', '1985'],
+            answer: 2
+        }
+        var questionTwo = {
+            id: 2,
+            text: "How many volcanos are active in the world?",
+            options: ['1500', '2000', '3000'],
+            answer: 0
+        }
+        var questionThree = {
+            id: 3,
+            text: "Most selling video game in history",
+            options: ['Super Mario', 'Snake', 'Tetris', 'Skyrim'],
+            answer: 2
+        }
+        var questionFour = {
+            id: 4,
+            text: "Who is host of man vs wild series of Discovery Channel?",
+            options: ['Steve austins', 'Cevin joe', 'Drake', 'Bear Grills', 'Rasmus Lerdorf'],
+            answer: 3
+        }
+        var questionFive = {
+            id: 5,
+            text: "Who created the javscript language",
+            options: ['Brendan Eich', 'Guido van Rossum', 'James Gosling', 'Rasmus Lerdorf'],
+            answer: 0
+        }
+
+        var questionList = [questionOne, questionTwo, questionThree, questionFour, questionFive];
+
+        function createElement(tag, id, text, parent) {
+            var child = document.createElement(tag);
+            child.id = id;
+            child.innerHTML = text;
+            parent.appendChild(child);
+        }
+
+        function showInstruction() {
+            createElement("button", 'startButton', "Start", startButtonDiv);
+            startButton = document.getElementById("startButton");
+            startButton.onclick = startTest;
+        }
+
+
+        function startTest() {
+
+
+        }
+    </script>
+</body>
+
+</html>
