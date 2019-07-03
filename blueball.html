@@ -7,7 +7,7 @@
         .ballStyle {
             border: none;
             color: white;
-            padding: 50px;
+            padding: 30px;
             color: black;
             text-align: center;
             text-decoration: none;
@@ -70,35 +70,38 @@
             <li>If you guess Higher number than expected the balls will turn run</li>
         </ul>
         <button id="startGame" onclick="startGame()"> click to start game</button>
+
     </div>
     <div id="gameFrameDiv">
 
     </div>
     <script>
-        var NUMBER_OF_BALLS = 25;
+        var NUMBER_OF_BALLS = 50;
         var INITIAL_NUMBER_OF_BALL = 1;
         var TOTAL_PLAYER_CHANCES = 3;
         var green = "green";
         var red = "red";
         var blue = "blue";
+
+        var randomBallNumber;
+        var playerChances;
         var gameStatus;
+        var gameInformation;
+        var playerChancesDisplay = document.getElementById("playerChances");
         var rulesMenu = document.getElementById("rulesMenu");
         var gameFrameDiv = document.getElementById("gameFrameDiv");
         var rulesList = document.getElementById("rulesList");
-        var playerChancesDisplay = document.getElementById("playerChances");
-        var randomBallNumber;
-        var playerChances;
 
 
         function showInstructions() {
-            removeAllGameFrameElements();
+            removeAllElementsOfId(gameFrameDiv);
             playerChancesDisplay.innerHTML = TOTAL_PLAYER_CHANCES;
             rulesMenu.style.visibility = 'visible';
             gameFrameDiv.style.visibility = 'hidden';
         }
 
         function startGame() {
-            randomBallNumber = Math.floor(Math.random() * 25) + 1;
+            randomBallNumber = Math.floor(Math.random() * NUMBER_OF_BALLS) + 1;
             playerChances = 0;
             gameStatus = "IN_PROGRESS";
             rulesMenu.style.visibility = 'hidden';
@@ -107,8 +110,9 @@
         }
 
         function loadBalls() {
-
-            for (let index = 1; index <= NUMBER_OF_BALLS; index++) {
+            createElement("p", "gameInformation", "Chances taken " + playerChances, gameFrameDiv);
+            gameInformation = document.getElementById("gameInformation");
+            for (let index = INITIAL_NUMBER_OF_BALL; index <= NUMBER_OF_BALLS; index++) {
                 var button = document.createElement("button");
                 button.innerHTML = index;
                 button.id = index;
@@ -117,50 +121,45 @@
             }
         }
 
+
         document.addEventListener('click', processPlayerInput);
 
         function processPlayerInput(event) {
             playerSelectedNumber = event.target.id;
             if (playerSelectedNumber >= INITIAL_NUMBER_OF_BALL && playerSelectedNumber <= NUMBER_OF_BALLS) {
                 playerChances++;
+
                 checkValue(playerSelectedNumber);
             }
         }
 
         function checkValue(playerSelectedNumber) {
-
+            gameInformation.innerHTML = "Chances taken " + playerChances;
             if (playerSelectedNumber == randomBallNumber) {
                 gameStatus = "WIN";
-                changeColorOfBalls(playerSelectedNumber, playerSelectedNumber, blue);
+                changeColorOfBalls(playerSelectedNumber, blue);
                 displayResult();
             }
             if (playerChances == TOTAL_PLAYER_CHANCES && gameStatus == "IN_PROGRESS") {
+                changeColorOfBalls(randomBallNumber, blue);
                 displayGameOver();
             }
             if (playerSelectedNumber < randomBallNumber) {
-                changeColorOfBalls(INITIAL_NUMBER_OF_BALL, playerSelectedNumber, green);
+                changeColorOfBalls(playerSelectedNumber, green);
             }
             if (playerSelectedNumber > randomBallNumber) {
-                changeColorOfBalls(playerSelectedNumber, NUMBER_OF_BALLS, red);
+                changeColorOfBalls(playerSelectedNumber, red);
             }
         }
 
         function displayGameOver() {
-            removeAllGameFrameElements();
-            createElement("h2", "gameOverText", "Game over", gameFrameDiv);
-            document.getElementById("gameOverText").style.color = "red";
-            createElement("h4", "playerChances", "Guessed Number was " + randomBallNumber, gameFrameDiv);
-            document.getElementById("gameOverText").style.color = "#f58142";
-
-            createPlayAgainButton();
+            gameInformation.innerHTML = "Game Over";
+            setTimeout(showInstructions, 3000);
         }
 
         function displayResult() {
-            removeAllGameFrameElements();
-
-            createElement("h2", "Win", "You Won ", gameFrameDiv);
-            createElement("h4", "gameWin", "You guessed Random number " + randomBallNumber + " in " + playerChances + " try", gameFrameDiv);
-            createPlayAgainButton();
+            gameInformation.innerHTML = "You Won";
+            setTimeout(showInstructions, 3000);
         }
 
         function createPlayAgainButton() {
@@ -169,17 +168,14 @@
         }
 
 
-        function removeAllGameFrameElements() {
-            while (gameFrameDiv.hasChildNodes()) {
-                gameFrameDiv.removeChild(gameFrameDiv.lastChild);
+        function removeAllElementsOfId(id) {
+            while (id.hasChildNodes()) {
+                id.removeChild(id.lastChild);
             }
         }
 
-        function changeColorOfBalls(initial, end, color) {
-            for (let index = initial; index <= end; index++) {
-                var button = document.createElement("button");
-                document.getElementById(index).style.background = color;
-            }
+        function changeColorOfBalls(initial, color) {
+            document.getElementById(initial).style.background = color;
         }
 
         function createElement(tag, id, text, parent) {
