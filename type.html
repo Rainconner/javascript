@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>checking javascript types</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+    <script>
+        var foo;
+        console.log(typeof foo);
+        if (foo) {
+            console.log(typeof foo);
+        } else {
+            console.log("in else statment")
+        }
+        var foo = 'hello';
+        console.log("passing 'hello' type of foo is  " + typeof foo);
+        if (foo) {
+            console.log(typeof foo);
+        } else {
+            console.log("in else statment")
+        }
+        var foo = 123;
+        console.log("passing 123  type of foo is  " + typeof foo);
+
+        var foo = true;
+        console.log("passing true  type of foo is  " + typeof foo);
+
+        var foo = function() {
+            console.log("in the function")
+        };
+        console.log("passing function ,type of foo is " + typeof foo);
+
+        var foo = {};
+        console.log("passing object,type of foo is " + typeof foo);
+        var foo = true;
+        console.log(foo == foo);
+        console.log(20 === '20');
+        console.log(20 + '20');
+        console.log(20 - '20');
+        console.log('20' + 20);
+    </script>
+</body>
+
+</html>
