@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+    <input id="textInput" type="text " name="Name ">
+    <button type="button" onclick="saveData()">Save Name</button>
+    <script>
+        var textInput = document.getElementById("textInput");
+
+        function saveData() {
+            var name = textInput.value;
+            localStorage.setItem('name', name);
+            console.log(localStorage.getItem('name'));
+
+        }
+    </script>
+</body>
+
+</html>
