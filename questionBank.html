@@ -89,7 +89,6 @@
                 options: ['Brendan Eich', 'Guido van Rossum', 'James Gosling', 'Rasmus Lerdorf'],
                 answer: 0
             }
-
             var questionList = [
                 questionOne,
                 questionTwo,
@@ -97,9 +96,6 @@
                 questionFour,
                 questionFive
             ];
-
-
-
 
             function showInstruction() {
                 createElement("button", 'startButton', "Start Test", startButtonDiv);
@@ -156,7 +152,6 @@
                 removeAllElementsOfId(invalidMoveFrame);
 
                 createElement("p", currentQuestion, "Question Number : " + (currentQuestion + 1) + "/" + questionList.length, questionFrame);
-
                 var question = questionList[currentQuestion];
                 createElement("p", currentQuestion, question.text, questionFrame);
                 createRadioButtons(question.options);
@@ -178,12 +173,10 @@
                     createElement("button", 'nextButton', "Next", questionFrame);
                     nextButton = document.getElementById("nextButton");
                     nextButton.onclick = nextQuestion;
-
                 }
                 userSelectedOption = undefined;
 
             }
-
 
             function finishQuiz() {
                 if (userSelectedOption == undefined)

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+    <script>
+        function creature(name) {
+            var myName = name;
+
+            function getName() { // we're creating a closure here
+                return myName;
+            }
+
+            function getLocalName() { // we're creating a closure here
+                var myName = "White giant"
+                return myName;
+            }
+            return {
+                getName,
+                getLocalName
+            };
+        }
+        var yetti = creature('yetti');
+
+        console.log("Local name of the monster :  " + yetti.getLocalName());
+        console.log("in creature scope the name of the monster :  " + yetti.getName());
+    </script>
+</body>
+
+</html>
