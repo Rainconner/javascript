@@ -10,7 +10,20 @@
 <body>
 
     <script>
+        console.log(this);
+        console.log(this == window);
+        console.log(this === window);
+        console.log(typeof Function);
         var foo;
+
+        something();
+        const outerConstant = 102;
+
+        function something() {
+            var make;
+            let turns;
+            const nothingIsConstant = 102;
+        }
         console.log(typeof foo);
         if (foo) {
             console.log(typeof foo);
@@ -43,6 +56,32 @@
         console.log(20 + '20');
         console.log(20 - '20');
         console.log('20' + 20);
+
+        console.log(typeof window);
+        console.log(typeof document);
+        console.log(typeof location);
+        console.log(typeof console);
+        console.log(typeof Object);
+        console.log(typeof Function);
+        console.log(window.name);
+
+        two(one);
+
+        function one() {
+            var madeBlack = "made it ";
+            console.log("in function one");
+            console.log(madeBlack);
+        }
+
+        function two(callback) {
+            console.log("in side the black hole");
+            setTimeout(() => {
+
+                console.log("In the second function");
+                callback();
+            }, 3000);
+
+        }
     </script>
 </body>
 

@@ -33,146 +33,236 @@
         <div id="questionFrame" style="align-content: center">
 
         </div>
-        <div id="nextButtonDiv">
-
+        <div id="invalidMoveFrame">
+            <div id="container"></div>
         </div>
-    </center>
-    <script>
-        var startButtonDiv = document.getElementById("startButtonDiv");
-        var questionFrame = document.getElementById("questionFrame");
-        var nextButtonDiv = document.getElementById("nextButtonDiv");
-        var startButton;
-        var nextButton;
-        var currentQuestion = 0;
-        var answerList = [];
-        var userSelectedOption;
+        <div id="piechart" style="width: 900px; height: 500px;"></div>
 
-        var questionOne = {
-            id: 1,
-            text: "When super Mario Bros was realesd?",
-            options: ['1988', '1999', '1985'],
-            answer: 2
-        }
-        var questionTwo = {
-            id: 2,
-            text: "How many volcanos are active in the world?",
-            options: ['1500', '2000', '3000'],
-            answer: 0
-        }
-        var questionThree = {
-            id: 3,
-            text: "Most selling video game in history",
-            options: ['Super Mario', 'Snake', 'Tetris', 'Skyrim'],
-            answer: 2
-        }
-        var questionFour = {
-            id: 4,
-            text: "Who is host of man vs wild series of Discovery Channel?",
-            options: ['Steve austins', 'Cevin joe', 'Drake', 'Bear Grills', 'Rasmus Lerdorf'],
-            answer: 3
-        }
-        var questionFive = {
-            id: 5,
-            text: "Who created the javscript language",
-            options: ['Brendan Eich', 'Guido van Rossum', 'James Gosling', 'Rasmus Lerdorf'],
-            answer: 0
-        }
-
-        var questionList = [
-            questionOne,
-            questionTwo,
-            questionThree,
-            questionFour,
-            questionFive
-        ];
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script>
+            var startButtonDiv = document.getElementById("startButtonDiv");
+            var questionFrame = document.getElementById("questionFrame");
+            var nextButtonDiv = document.getElementById("nextButtonDiv");
+            var invalidMoveFrame = document.getElementById("invalidMoveFrame");
+            var startButton;
+            var nextButton;
+            var currentQuestion = 0;
+            var answerList = [];
+            var userSelectedOption;
+            var previousButton;
+            var validMove = false;
+            var RightAnswerbyUser = 0;
+            var WrongAnswerbyUser = 0;
 
 
-        function createElement(tag, id, text, parent) {
-            var child = document.createElement(tag);
-            child.id = id;
-            child.innerHTML = text;
-            parent.appendChild(child);
-        }
+            google.charts.load('current', {
+                'packages': ['corechart']
+            });
 
-        function showInstruction() {
-            createElement("button", 'startButton', "Start Test", startButtonDiv);
-            startButton = document.getElementById("startButton");
-            startButton.onclick = startTest;
-        }
+            var questionOne = {
+                id: 1,
+                text: "When super Mario Bros was realesd?",
+                options: ['1988', '1999', '1985'],
+                answer: 2
+            }
+            var questionTwo = {
+                id: 2,
+                text: "How many volcanos are active in the world?",
+                options: ['1500', '2000', '3000'],
+                answer: 0
+            }
+            var questionThree = {
+                id: 3,
+                text: "Most selling video game in history",
+                options: ['Super Mario', 'Snake', 'Tetris', 'Skyrim'],
+                answer: 2
+            }
+            var questionFour = {
+                id: 4,
+                text: "Who is host of man vs wild series of Discovery Channel?",
+                options: ['Steve austins', 'Cevin joe', 'Drake', 'Bear Grills', 'Rasmus Lerdorf'],
+                answer: 3
+            }
+            var questionFive = {
+                id: 5,
+                text: "Who created the javscript language",
+                options: ['Brendan Eich', 'Guido van Rossum', 'James Gosling', 'Rasmus Lerdorf'],
+                answer: 0
+            }
 
-        function startTest() {
-            createElement("button", 'nextButton', "Next", nextButtonDiv);
-            nextButton = document.getElementById("nextButtonDiv");
-            nextButton.onclick = nextQestion;
-            loadFirstQuestion();
-            currentQuestion++;
-        }
+            var questionList = [
+                questionOne,
+                questionTwo,
+                questionThree,
+                questionFour,
+                questionFive
+            ];
 
-        function loadFirstQuestion() {
-            var question = questionList[currentQuestion];
-            createElement("p", currentQuestion, question.text, questionFrame);
-            createRadioButtons(question.options);
-        }
 
-        function isUserhaveSelectedOption(event) {
-            if (event.target.id >= 0)
-                userSelectedOption = event.target.id;
-        }
 
-        function nextQestion() {
-            if (userSelectedOption >= 0) {
-                var result = {
-                    option: userSelectedOption,
-                    answer: isUserAnswerRight()
+
+            function showInstruction() {
+                createElement("button", 'startButton', "Start Test", startButtonDiv);
+                startButton = document.getElementById("startButton");
+                startButton.onclick = startTest;
+            }
+
+            function startTest() {
+                removeAllElementsOfId(startButtonDiv);
+                loadQuestion();
+            }
+
+            function isUserhaveSelectedOption(event) {
+                if (event.target.id >= 0)
+                    userSelectedOption = event.target.id;
+            }
+
+            function notValidMove() {
+                removeAllElementsOfId(invalidMoveFrame);
+                createElement("p", "invalidMove", "Please select any option", invalidMoveFrame);
+            }
+
+            function nextQuestion() {
+
+                if (userSelectedOption == undefined)
+                    notValidMove();
+
+                if (userSelectedOption != undefined) {
+                    answerList.push(userSelectedOption);
+                    console.log(answerList);
+                    userSelectedOption = undefined;
+                    currentQuestion++;
+                    loadQuestion();
                 }
-                alert(answerList);
-                answerList.push(result);
+            }
+
+            function previousQuestion() {
+                currentQuestion -= 1;
+                loadQuestion();
+                document.getElementById(answerList[currentQuestion]).checked = true;
+                userSelectedOption = answerList[currentQuestion];
+                answerList.pop();
+            }
+
+            function isLastQuestion() {
+                if ((currentQuestion + 1) == questionList.length)
+                    return true;
+                return false;
+            }
+
+            function loadQuestion() {
+
                 removeAllElementsOfId(questionFrame);
+                removeAllElementsOfId(invalidMoveFrame);
+
+                createElement("p", currentQuestion, "Question Number : " + (currentQuestion + 1) + "/" + questionList.length, questionFrame);
+
                 var question = questionList[currentQuestion];
                 createElement("p", currentQuestion, question.text, questionFrame);
                 createRadioButtons(question.options);
+
+
+                createElement("button", 'previousButton', "Back", questionFrame);
+                previousButton = document.getElementById("previousButton");
+                previousButton.onclick = previousQuestion;
+                if (currentQuestion == 0) {
+                    previousButton.style.visibility = "hidden";
+                }
+
+                if (isLastQuestion()) {
+                    createElement("button", 'finishButton', "Finish", questionFrame);
+                    nextButton = document.getElementById("finishButton");
+                    nextButton.onclick = finishQuiz;
+                }
+                if (!isLastQuestion()) {
+                    createElement("button", 'nextButton', "Next", questionFrame);
+                    nextButton = document.getElementById("nextButton");
+                    nextButton.onclick = nextQuestion;
+
+                }
                 userSelectedOption = undefined;
-                currentQuestion++;
+
             }
-        }
-
-        function isUserAnswerRight() {
-            if (userSelectedOption == currentQuestion.answer)
-                return true;
-
-            return false;
-        }
 
 
-        function createRadioButtons(options) {
-            var optionNumber = 0;
-            options.forEach(element => {
+            function finishQuiz() {
+                if (userSelectedOption == undefined)
+                    notValidMove();
 
-                var radio = document.createElement("input");
-                var label = document.createElement("label");
-
-                radio.id = optionNumber;
-                radio.type = "radio";
-                radio.name = "answer";
-                radio.value = element;
-
-                radio.onclick = isUserhaveSelectedOption
-                label.appendChild(radio);
-                label.appendChild(document.createTextNode(element));
-
-                questionFrame.appendChild(label);
-                var br = document.createElement("br");
-                questionFrame.appendChild(br);
-                optionNumber++;
-            });
-        }
-
-        function removeAllElementsOfId(id) {
-            while (id.hasChildNodes()) {
-                id.removeChild(id.lastChild);
+                if (userSelectedOption != undefined) {
+                    answerList.push(userSelectedOption);
+                    currentQuestion++;
+                    displayResult();
+                }
             }
-        }
-    </script>
+
+            function displayResult() {
+                removeAllElementsOfId(questionFrame);
+                removeAllElementsOfId(invalidMoveFrame);
+
+                for (let index = 0; index < questionList.length; index++) {
+                    if (answerList[index] == questionList[index].answer)
+                        RightAnswerbyUser++;
+                }
+                WrongAnswerbyUser = questionList.length - RightAnswerbyUser;
+                google.charts.setOnLoadCallback(drawChart);
+            }
+
+            function drawChart() {
+
+                var data = google.visualization.arrayToDataTable([
+                    ['summry', 'Answears'],
+                    ['Right answers', RightAnswerbyUser],
+                    ['Wrong answers', WrongAnswerbyUser],
+
+                ]);
+
+                var options = {
+                    title: 'Quiz summry',
+                    is3D: true
+                };
+
+                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+                chart.draw(data, options);
+            }
+
+            function createRadioButtons(options) {
+                var optionNumber = 0;
+                options.forEach(element => {
+
+                    var radio = document.createElement("input");
+                    var label = document.createElement("label");
+
+                    radio.id = optionNumber;
+                    radio.type = "radio";
+                    radio.name = "answer";
+                    radio.value = element;
+
+                    radio.onclick = isUserhaveSelectedOption
+                    label.appendChild(radio);
+                    label.appendChild(document.createTextNode(element));
+
+                    questionFrame.appendChild(label);
+                    var br = document.createElement("br");
+                    questionFrame.appendChild(br);
+                    optionNumber++;
+                });
+            }
+
+            function createElement(tag, id, text, parent) {
+                var child = document.createElement(tag);
+                child.id = id;
+                child.innerHTML = text;
+                parent.appendChild(child);
+            }
+
+            function removeAllElementsOfId(id) {
+                while (id.hasChildNodes()) {
+                    id.removeChild(id.lastChild);
+                }
+            }
+        </script>
 </body>
 
 </html>
