@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+<body>
+
+    <input id="textInput" type="text ">
+    <button type="button" onclick="saveData()">add Car</button>
+    <script>
+        var textInput = document.getElementById("textInput");
+
+        function saveData() {
+            var car = textInput.value;
+            sessionStorage.setItem('car', car);
+            console.log(sessionStorage.getItem('car'));
+
+        }
+    </script>
+</body>
+
+</html>
