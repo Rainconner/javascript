@@ -10,6 +10,11 @@
 <body>
 
     <script>
+        for (count = 0; count < 10; count++) {
+            console.log(count);
+        }
+        console.log("count is " + count);
+
         console.log(this);
         console.log(this == window);
         console.log(this === window);
@@ -80,7 +85,6 @@
                 console.log("In the second function");
                 callback();
             }, 3000);
-
         }
     </script>
 </body>

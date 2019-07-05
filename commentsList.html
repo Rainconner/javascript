@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Comments</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<style>
+
+</style>
+
+<body onload="displayCommentList()">
+    <center>
+        <div id="CommentInputFrame">
+            <input id="commentField" type="text">
+            <button id="addCommnetButton" type="button" onclick="addComment()">add Commnet</button>
+        </div>
+        <div id="notifyEmptyDiv"></div>
+        <div id="commnetList"></div>
+    </center>
+    <script>
+        'use strict';
+
+        var commentField = document.getElementById("commentField");
+        var notifyEmptyDiv = document.getElementById("notifyEmptyDiv");
+        var commnetList = document.getElementById("commnetList");
+        var commentText;
+        var commentNumber = localStorage.length;
+
+        function isEmptyCommnet() {
+            commentText = commentField.value;
+            if (!commentText.replace(/\s/g, '').length || commentText == "" || commentText == null)
+                return true;
+            return false;
+        }
+
+        function notifyEmptyComment() {
+            removeAllElementsOfId(notifyEmptyDiv);
+            createElement("p", "emptyComment", "Can not add Empty Comment", notifyEmptyDiv);
+        }
+
+        function addComment() {
+            if (!isEmptyCommnet()) {
+                removeAllElementsOfId(notifyEmptyDiv);
+                storeComment();
+                displayCommentList();
+            }
+
+            if (isEmptyCommnet())
+                notifyEmptyComment();
+        }
+
+        function displayCommentList() {
+            removeAllElementsOfId(commnetList);
+            for (var i = localStorage.length; i >= 0; i--)
+                createElement("p", i, localStorage.getItem(i), commnetList);
+        }
+
+        function storeComment() {
+            localStorage.setItem(commentNumber, commentText);
+            commentNumber++;
+        }
+
+        function createElement(tag, id, text, parent) {
+            var child = document.createElement(tag);
+            child.id = id;
+            child.innerHTML = text;
+            parent.appendChild(child);
+        }
+
+        function removeAllElementsOfId(id) {
+            while (id.hasChildNodes()) {
+                id.removeChild(id.lastChild);
+            }
+        }
+    </script>
+</body>
+
+</html>

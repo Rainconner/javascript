@@ -9,15 +9,17 @@
 
 <body>
     <script>
+        var myName = "hiren"
+
         function creature(name) {
-            var myName = name;
+            myName = name;
 
             function getName() { // we're creating a closure here
                 return myName;
             }
 
             function getLocalName() { // we're creating a closure here
-                var myName = "White giant"
+                var myName = "White giant";
                 return myName;
             }
             return {
@@ -26,6 +28,7 @@
             };
         }
         var yetti = creature('yetti');
+        console.log("globle name " + myName);
 
         console.log("Local name of the monster :  " + yetti.getLocalName());
         console.log("in creature scope the name of the monster :  " + yetti.getName());
