@@ -1,39 +1,52 @@
 var selectedOprator = null;
 var selectedAdvanceOprator = null;
-var firstInput = null;
-var secondInput = null;
+var firstInput = "";
+var secondInput = "";
 var isSimpleOprator = true;
 function c(val) {
   document.getElementById("display").value = val;
 }
 
 function insertDigit(value) {
-  document.getElementById("display").value += value;
+  addDigitInInput(value);
+  displayOutput();
+}
+function addDigitInInput(value) {
   if (selectedOprator != null) {
     secondInput += value.toString();
     return;
   }
   firstInput += value.toString();
 }
+function displayOutput() {
+  if (isSimpleOprator) {
+    document.getElementById("display").value =
+      firstInput + " " + selectedOprator + " " + secondInput;
+    return;
+  }
+  document.getElementById("display").value = firstInput;
+}
 
 function p() {
   c(eval(document.getElementById("display").value) / 100);
 }
 function performOpration() {
-  console.log(selectedOprator);
-
   switch (selectedOprator) {
     case "+":
-      alert(firstInput + "+++" + secondInput);
+      performAddition();
       break;
 
     default:
       break;
   }
 }
-
+function performAddition() {
+  parseInt.apply(firstInput);
+  alert(firstInput);
+  alert(firstInput + secondInput);
+}
 function selectSimpleOprator(oprator) {
-  selectOprator = oprator;
+  selectedOprator = oprator;
   isSimpleOprator = true;
 }
 
@@ -56,6 +69,10 @@ var e = function() {
   function isSecondInputEmpty() {
     if (firstInput == null || firstInput == undefined || firstInput == "")
       return true;
+    return false;
+  }
+  function isOpratorEmpty(oprator) {
+    if (oprator == null || oprator == undefined || oprator == "") return true;
     return false;
   }
 };
