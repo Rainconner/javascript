@@ -1,32 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Dynamic drop down creator</title>
-</head>
+  </head>
 
-<body onload="dropdwonContentCreator()">
-
-    <select id="dropdown">
-        </select>
+  <body onload="dropdwonContentCreator()">
+    <select id="dropdown"> </select>
 
     <script>
-        var dropdown = document.getElementById("dropdown");
+      var dropdown = document.getElementById("dropdown");
 
-        function dropdwonContentCreator() {
-
-            var colorList = ["red", "green", "purple"];
-            for (let index = 0; index < colorList.length; index++) {
-                var option = document.createElement("option");
-                option.id = colorList[index];
-                option.innerHTML = colorList[index];
-                dropdown.appendChild(option);
-            }
+      function dropdwonContentCreator() {
+        var colorList = ["red", "green", "purple"];
+        for (let index = 0; index < colorList.length; index++) {
+          var option = document.createElement("option");
+          option.id = colorList[index];
+          option.innerHTML = colorList[index];
+          dropdown.appendChild(option);
         }
+      }
     </script>
-</body>
-
+  </body>
 </html>

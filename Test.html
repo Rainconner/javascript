@@ -1,0 +1,20 @@
+<html>
+  <head>
+    <h1>Odd and even</h1>
+  </head>
+
+  <body>
+    <script>
+      function findOutlier(int) {
+        var even = int.filter(a => a % 2 == 0);
+        console.log(even);
+
+        var odd = int.filter(a => a % 2 !== 0);
+        console.log(odd);
+
+        return even.length == 1 ? even[0] : odd[0];
+      }
+      findOutlier([1, 2, 11, 111]);
+    </script>
+  </body>
+</html>

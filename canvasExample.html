@@ -8,15 +8,30 @@
 </head>
 
 <body>
-    <canvas id="canvas"></canvas>
+    <!-- <canvas id="canvas"></canvas> -->
 
     <script>
-        const canvas = document.getElementById("canvas");
-        const ctx = canvas.getContext("2d");
+        var isSquare = function (n) {
+            if (n < 0) {
+                return false;
+            }
+            var half = parseInt(25 / 2);
+            for (i = half; i >= 0; i--) {
+                [console.log(i*i);
+                if(i*i==25)
+                {                   return (i * i)==25;
 
-        ctx.moveTo(0, 0);
-        ctx.lineTo(100, 300);
-        ctx.stroke();
+                }
+            }
+            return false;
+        }
+        isSquare(10);
+        // const canvas = document.getElementById("canvas");
+        // const ctx = canvas.getContext("2d");
+
+        // ctx.moveTo(0, 0);
+        // ctx.lineTo(100, 300);
+        // ctx.stroke();
     </script>
 </body>
 

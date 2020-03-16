@@ -1,0 +1,22 @@
+<html>
+
+<head>
+    <h1>Background Color Change</h1>
+
+</head>
+
+<body>
+    <select name="Color" onchange="changeColor(value)">
+        <option selected disabled hidden>Select</option>
+        <option value="#ff5e61">Red</option>
+        <option value="#469fe8">Blue</option>
+        <option value="#46e871">Green</option>
+    </select>
+    <script>
+        function changeColor(Color) {
+            document.bgColor = Color;
+        }
+    </script>
+</body>
+
+</html
